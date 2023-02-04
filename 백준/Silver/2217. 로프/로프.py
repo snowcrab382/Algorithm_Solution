@@ -7,10 +7,9 @@ for _ in range(n):
     rope.append(int(input()))
 
 rope.sort()
-temp = rope[0] * n
-for i in range(1,n):
+temp = 0
+for i in range(n):
     if temp > rope[i] * (n-i):
         continue
     temp = rope[i] * (n-i)
-
 print(temp)
