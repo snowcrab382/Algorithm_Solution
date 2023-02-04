@@ -1,13 +1,16 @@
 import sys
-input = sys.stdin.readline
 
-N = int(input())
-a = []
-result = 0
-for i in range(N):
-    a.append(int(input()))
-a.sort()
-for j in range(N):
-    if a[j]*(N-j) > result:
-        result = a[j]*(N-j)
-print(result)
+input = sys.stdin.readline
+n = int(input())
+rope = []
+for _ in range(n):
+    rope.append(int(input()))
+
+rope.sort()
+temp = rope[0] * n
+for i in range(1,n):
+    if temp > rope[i] * (n-i):
+        continue
+    temp = rope[i] * (n-i)
+
+print(temp)
