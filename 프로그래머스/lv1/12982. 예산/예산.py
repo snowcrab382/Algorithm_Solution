@@ -3,10 +3,7 @@ def solution(d, budget):
     d.sort()
     for i in d:
         budget -= i
+        if budget < 0:
+            break
         cnt += 1
-        if budget == 0:
-            return cnt
-        elif budget < 0:
-            return cnt-1
-    return len(d)
-        
+    return cnt
