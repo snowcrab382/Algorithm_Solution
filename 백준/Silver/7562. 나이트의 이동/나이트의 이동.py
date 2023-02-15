@@ -1,7 +1,5 @@
 from collections import deque
 
-T = int(input())
-
 dx = [2,2,-2,-2,1,1,-1,-1]
 dy = [1,-1,1,-1,2,-2,2,-2]
 
@@ -9,9 +7,10 @@ def bfs(x,y):
     queue = deque()
     graph[x][y] = 1
     queue.append((x,y))
-
     while queue:
         x,y = queue.popleft()
+        if x == stop_x and y == stop_y:
+            return graph[x][y]-1
         for i in range(8):
             nx = x + dx[i]
             ny = y + dy[i]
@@ -20,11 +19,11 @@ def bfs(x,y):
                 graph[nx][ny] = graph[x][y] + 1
                 queue.append((nx,ny))
 
+T = int(input())
 for _ in range(T):
     l = int(input())
-    graph = [[0] * l for i in range(l)]
+    graph = [[0] * l for _ in range(l)]
     start_x,start_y = map(int,input().split())
     stop_x, stop_y = map(int,input().split())
 
-    bfs(start_x,start_y)
-    print(graph[stop_x][stop_y]-1)
+    print(bfs(start_x,start_y))
