@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 def bfs():
     while queue:
@@ -22,12 +23,13 @@ def bfs():
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
 
+input = sys.stdin.readline
 n, m = map(int, input().split())
 queue = deque()
 
 graph = []
 for i in range(n):
-    graph.append(list(input()))
+    graph.append(list(input().rstrip()))
     if 'J' in graph[i]:
         queue.append((0,i,graph[i].index('J')))
 
