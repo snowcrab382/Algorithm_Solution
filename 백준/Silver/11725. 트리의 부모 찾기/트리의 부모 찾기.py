@@ -4,9 +4,8 @@ sys.setrecursionlimit(10**6)
 
 def dfs(x):
     for i in graph[x]:
-        if not visited[i]:
+        if not result[i]:
             result[i] = x
-            visited[i] = True
             dfs(i)
 
 n = int(input())
@@ -17,8 +16,7 @@ for _ in range(n-1):
     graph[y].append(x)
 
 result = [0] * (n+1)
-visited = [False] * (n+1)
-visited[1] = True
+result[1] = True
 
 dfs(1)
 for i in result[2:]:
