@@ -1,19 +1,15 @@
-n,m = map(int,input().split())
-graph = sorted(list(map(int,input().split())))
-ans = [0] * 10
-visited = [0] * 10
-
-def solve(x):
+def bt(x):
     if x == m:
         for i in range(m):
-            print(graph[ans[i]], end=' ')
+            print(result[i], end=' ')
         print()
         return
 
-    for i in range(n):
-        ans[x] = i
-        visited[i] = 1
-        solve(x+1)
-        visited[i] = 0
+    for i in graph:
+            result[x] = i
+            bt(x+1)
 
-solve(0)
+n,m= map(int,input().split())
+graph = sorted(list(map(int,input().split())))
+result = [0] * (n+1)
+bt(0)
