@@ -1,20 +1,20 @@
-n,m = map(int,input().split())
-arr = [0] * 10
-isused = [0] * 10
-num = sorted(list(map(int,input().split())))
-
-def func(k):
-    if k == m:
+def bt(x):
+    if x == m:
         for i in range(m):
-            print(num[arr[i]], end=' ')
+            print(result[i], end=' ')
         print()
         return
 
-    for i in range(n):
-        if not isused[i]:
-            arr[k] = i
-            isused[i] = 1
-            func(k+1)
-            isused[i] = 0
+    for i in graph:
+        if not visited[i]:
+            result[x] = i
+            visited[i] = 1
+            bt(x+1)
+            visited[i] = 0
 
-func(0)
+n,m= map(int,input().split())
+graph = sorted(list(map(int,input().split())))
+visited = [0] * 10001
+result = [0] * (n+1)
+
+bt(0)
