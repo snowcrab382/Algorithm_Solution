@@ -1,17 +1,18 @@
-N,S = map(int,input().split())
-cnt = 0
-ans = []
-arr = list(map(int,input().split()))
-
-def solve(start):
+def bt(x):
     global cnt
-    if sum(ans) == S and len(ans)>0:
+    if sum(result) == s and len(result) > 0:
         cnt += 1
-    
-    for i in range(start,N):
-        ans.append(arr[i])
-        solve(i+1)
-        ans.pop()
         
-solve(0)
+
+    for i in range(x,n):
+        result.append(graph[i])
+        bt(i+1)
+        result.pop()
+
+n,s = map(int,input().split())
+graph = list(map(int,input().split()))
+result = []
+cnt = 0
+
+bt(0)
 print(cnt)
