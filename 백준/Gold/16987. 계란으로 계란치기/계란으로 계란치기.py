@@ -1,6 +1,3 @@
-import sys
-input = sys.stdin.readline
-
 def bt(x):
     global max_cnt
     cnt = 0
