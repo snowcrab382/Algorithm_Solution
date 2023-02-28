@@ -1,5 +1,3 @@
-import math
-
 def solution(str1, str2):
     str1,str2 = str1.lower(),str2.lower()
     result_1 = []
@@ -22,4 +20,4 @@ def solution(str1, str2):
     
     if allhap == 0:
         return 65536
-    return math.floor(cnt*65536/allhap)
+    return int(cnt*65536/allhap)
