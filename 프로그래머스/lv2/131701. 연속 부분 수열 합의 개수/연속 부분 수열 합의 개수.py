@@ -5,6 +5,5 @@ def solution(elements):
     
     for i in range(n):
         for j in range(n):
-            result.add(sum(elements[j:j+i+1]))
-
+            result.add(sum(elements[j:j+i]))
     return len(result)
