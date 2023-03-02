@@ -9,6 +9,7 @@ def solution(skill, skill_trees):
         for j in i:
             if j in skill:
                 check = check+j
-        if check in a or check == '':
+        #i에 skill조합에 해당하는 경우가 아예 없는 경우도 배울 수 있기 때문에 cnt 해줘야함(check == '')
+        if check == skill[:len(check)]:
             cnt += 1
     return cnt
