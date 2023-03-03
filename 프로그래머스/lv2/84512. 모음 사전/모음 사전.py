@@ -2,11 +2,10 @@ import itertools
 
 def solution(word):
     alpha = ['A','E','I','O','U'] * 5
-    answer = set()
+    answer = []
     for i in range(1,6):
-        a = list(itertools.permutations(alpha,i))
-        for j in range(len(a)):
-            answer.add(''.join(a[j]))
-    answer = sorted(list(answer))
-    return answer.index(word)+1
+        for j in set(itertools.permutations(alpha,i)):
+            answer.append(''.join(j))
+            
+    return sorted(answer).index(word)+1
         
