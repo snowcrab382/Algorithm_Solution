@@ -1,7 +1,7 @@
 from collections import deque
 
 def solution(priorities, location):
-    a = [(i,priorities[i]) for i in range(len(priorities))]
+    a = [(i,j) for i,j in enumerate(priorities)]
     queue = deque(a)
     cnt = 0
     
