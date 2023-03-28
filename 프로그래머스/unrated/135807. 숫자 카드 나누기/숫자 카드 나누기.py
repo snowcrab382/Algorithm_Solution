@@ -42,4 +42,3 @@ def solution(arrayA, arrayB):
         return max(answer)
     else:
         return 0
-            
