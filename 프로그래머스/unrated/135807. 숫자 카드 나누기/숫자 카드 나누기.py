@@ -1,42 +1,30 @@
-def solution(arrayA, arrayB):
-    div_A,div_B = [],[]
-    answer = []
-    for i in range(1,int((arrayA[0])**0.5)+1):
-        if arrayA[0] % i == 0:
-            div_A.append(i)
-            div_A.append(arrayA[0]//i)
-    for j in range(1,int((arrayB[0])**0.5)+1):
-        if arrayB[0] % j == 0:
-            div_B.append(j)
-            div_B.append(arrayB[0]//j)
-    
-    for x in div_A:
-        tmp = True
-        for y in arrayA:
-            if y % x != 0:
-                tmp = False
-                break
-        if tmp:
-            for z in arrayB:
-                if z % x == 0:
-                    tmp = False
-                    break
-            if tmp:
-                answer.append(x)
+from math import gcd
 
-    for x in div_B:
+def solution(arrayA, arrayB):
+    def get_gcd(arr):
+        g = arr[0]
+        for i in range(1,len(arr)):
+            g = gcd(g,arr[i])
+        return g
+    
+    div_A,div_B = get_gcd(arrayA),get_gcd(arrayB)
+    answer = []
+
+    for x in arrayB:
         tmp = True
-        for y in arrayB:
-            if y % x != 0:
-                tmp = False
-                break
-        if tmp:
-            for z in arrayA:
-                if z % x == 0:
-                    tmp = False
-                    break
-            if tmp:
-                answer.append(x)
+        if x % div_A == 0:
+            tmp = False
+            break
+    if tmp:
+        answer.append(div_A)
+        
+    for y in arrayA:
+        tmp = True
+        if not y % div_B:
+            tmp = False
+            break
+    if tmp:
+        answer.append(div_B)
         
     if len(answer):
         return max(answer)
