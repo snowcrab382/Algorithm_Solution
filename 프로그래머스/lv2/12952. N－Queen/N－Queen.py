@@ -1,9 +1,9 @@
 
 count = 0
 def solution(n):
-    visited_1 = []
-    visited_2 = []
-    visited_3 = []
+    visited_1 = [0] * 100
+    visited_2 = [0] * 100
+    visited_3 = [0] * 100
 
     def bt(r):
         global count
@@ -11,13 +11,13 @@ def solution(n):
             count += 1
         
         for i in range(n):
-            if i not in visited_1 and i-r not in visited_2 and r+i not in visited_3:
-                visited_1.append(i)
-                visited_2.append(i-r)
-                visited_3.append(r+i)
+            if not visited_1[i] and not visited_2[i-r] and not visited_3[r+i]:
+                visited_1[i] = 1
+                visited_2[i-r] = 1
+                visited_3[r+i] = 1
                 bt(r+1)
-                visited_1.pop()
-                visited_2.pop()
-                visited_3.pop()
+                visited_1[i] = 0
+                visited_2[i-r] = 0
+                visited_3[r+i] = 0
     bt(0)
     return count
