@@ -1,20 +1,26 @@
-import itertools
 import sys
-input = sys.stdin.readline
+n = int(sys.stdin.readline())
+graph = [ list(map(int, sys.stdin.readline().split())) for _ in range(n) ]
+visit = [ False for _ in range(n) ] #1
+min_value = sys.maxsize #2
 
-n = int(input())
-a = [list(map(int,input().split())) for _ in range(n)]
-hap,min_num = 0,40000
-for i in a:
-    hap += sum(i)
+def backTracking(depth, idx): #3
+    global min_value
+    if depth == n // 2: #4
+        power1, power2 = 0, 0
+        for i in range(n):
+            for j in range(n):
+                if visit[i] and visit[j]: #5
+                    power1 += graph[i][j]
+                elif not visit[i] and not visit[j]: #6
+                    power2 += graph[i][j]
+        min_value = min(min_value, abs(power1-power2)) #7
+        return
 
-people = list(range(n))
-for i in itertools.combinations(people,n//2):
-    start,link = list(set(i)),list(set(people)-set(i))
-    s_count,l_count = 0,0
-    for j in itertools.permutations(start,2):
-        s_count += a[j[0]][j[1]]
-    for k in itertools.permutations(link,2):
-        l_count += a[k[0]][k[1]]
-    min_num = min(abs(s_count-l_count),min_num)
-print(min_num)
+    for i in range(idx, n): #8
+        if not visit[i]:
+            visit[i] = True
+            backTracking(depth+1, i+1) #9
+            visit[i] = False
+backTracking(0, 0)
+print(min_value)
