@@ -1,64 +1,43 @@
-from collections import deque
+n, m, x, y, k = map(int, input().split())
 
-n,m,x,y,k = map(int,input().split())
-graph = [list(map(int,input().split())) for _ in range(n)]
-move = deque(list(map(int,input().split())))
+board = []
+dx = [0, 0, -1, 1]
+dy = [1, -1, 0, 0]
+dice = [0, 0, 0, 0, 0, 0]
 
-dx = [0,0,0,-1,1]
-dy = [0,1,-1,0,0]
+def turn(dir):
+    a, b, c, d, e, f = dice[0], dice[1], dice[2], dice[3], dice[4], dice[5]
+    if dir == 1: #동
+        dice[0], dice[1], dice[2], dice[3], dice[4], dice[5] = d, b, a, f, e, c
 
-def roll(dice,dir):
-    rolled_dice = [0,0,0,0,0,0]
-    if dir == 1:
-        rolled_dice[0] = dice[0]
-        rolled_dice[2] = dice[1]
-        rolled_dice[3] = dice[2]
-        rolled_dice[5] = dice[3]
-        rolled_dice[4] = dice[4]
-        rolled_dice[1] = dice[5]
-    elif dir == 2:
-        rolled_dice[0] = dice[0]
-        rolled_dice[5] = dice[1]
-        rolled_dice[1] = dice[2]
-        rolled_dice[2] = dice[3]
-        rolled_dice[4] = dice[4]
-        rolled_dice[3] = dice[5]
-    elif dir == 3:
-        rolled_dice[5] = dice[0]
-        rolled_dice[1] = dice[1]
-        rolled_dice[0] = dice[2]
-        rolled_dice[3] = dice[3]
-        rolled_dice[2] = dice[4]
-        rolled_dice[4] = dice[5]
+    elif dir == 2: #서
+        dice[0], dice[1], dice[2], dice[3], dice[4], dice[5] = c, b, f, a, e, d
+
+    elif dir == 3: #북
+        dice[0], dice[1], dice[2], dice[3], dice[4], dice[5] = e, a, c, d, f, b
+
     else:
-        rolled_dice[2] = dice[0]
-        rolled_dice[1] = dice[1]
-        rolled_dice[4] = dice[2]
-        rolled_dice[3] = dice[3]
-        rolled_dice[5] = dice[4]
-        rolled_dice[0] = dice[5]
-    return rolled_dice
+        dice[0], dice[1], dice[2], dice[3], dice[4], dice[5] = b, f, c, d, a, e
 
-def bfs(x,y):
-    dice = [0,0,0,0,0,0]
-    queue = deque()
-    queue.append((x,y))
-    while move:
-        x,y = queue.popleft()
-        dir = move.popleft()
-        nx = x + dx[dir]
-        ny = y + dy[dir]
-        if 0 <= nx < n and 0 <= ny < m:
-            dice = roll(dice,dir)
-            print(dice[2])
-            if graph[nx][ny] != 0:
-                dice[5] = graph[nx][ny]
-                graph[nx][ny] = 0
-            else:
-                graph[nx][ny] = dice[5]
+for i in range(n):
+    board.append(list(map(int, input().split())))
 
-            queue.append((nx,ny))
-        else:
-            queue.append((x,y))
+comm = list(map(int, input().split()))
 
-bfs(x,y)
+nx, ny = x, y
+for i in comm:
+    nx += dx[i-1]
+    ny += dy[i-1]
+
+    if nx < 0 or nx >= n or ny < 0 or ny >= m:
+        nx -= dx[i-1]
+        ny -= dy[i-1]
+        continue
+    turn(i)
+    if board[nx][ny] == 0:
+        board[nx][ny] = dice[-1]
+    else:
+        dice[-1] = board[nx][ny]
+        board[nx][ny] = 0
+
+    print(dice[0])
