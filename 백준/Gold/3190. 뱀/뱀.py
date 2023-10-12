@@ -1,43 +1,61 @@
 from collections import deque
 
 n = int(input())
-graph = [[0] * n for _ in range(n)]
 k = int(input())
-for _ in range(k):
-    x,y = map(int,input().split())
-    graph[x-1][y-1] = 1
+
+graph = [[0] * n for _ in range(n)]
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0]
+
+for i in range(k):
+    a, b = map(int, input().split())
+    graph[a - 1][b - 1] = 2
+
 l = int(input())
-dir = [0] * 10001
-for _ in range(l):
-    x,c = map(str, input().split())
-    dir[int(x)] = c
+dirDict = dict()
+queue = deque()
+queue.append((0, 0))
 
-def check(time,dx,dy):
-    if dir[time] == 'L':
-        dx,dy = -dy,dx
-    elif dir[time] == 'D':
-        dx,dy = dy,-dx
-    return dx,dy
+for i in range(l):
+    x, c = input().split()
+    dirDict[int(x)] = c
 
-def move(x,y):
-    dx,dy = 0,1
-    time = 0
-    head = deque()
-    tail = deque()
-    head.append((x,y))
-    while head:
-        x,y = head.popleft()
-        dx,dy = check(time,dx,dy)
-        nx = x + dx
-        ny = y + dy
-        time += 1
-        if 0 <= nx < n and 0 <= ny < n and (nx,ny) not in tail:
-            head.append((nx,ny))
-            tail.append((x,y))
-            if graph[nx][ny] == 0:
-                tail.popleft()
-            elif graph[nx][ny] == 1:
-                graph[nx][ny] = 0
-    print(time)
+x, y = 0, 0
+graph[x][y] = 1
+cnt = 0
+direction = 0
 
-move(0,0)
+def turn(alpha):
+    global direction
+    if alpha == 'L':
+        direction = (direction - 1) % 4
+    else:
+        direction = (direction + 1) % 4
+
+
+while True:
+    cnt += 1
+    x += dx[direction]
+    y += dy[direction]
+
+    if x < 0 or x >= n or y < 0 or y >= n:
+        break
+
+    if graph[x][y] == 2:
+        graph[x][y] = 1
+        queue.append((x, y))
+        if cnt in dirDict:
+            turn(dirDict[cnt])
+
+    elif graph[x][y] == 0:
+        graph[x][y] = 1
+        queue.append((x, y))
+        tx, ty = queue.popleft()
+        graph[tx][ty] = 0
+        if cnt in dirDict:
+            turn(dirDict[cnt])
+
+    else:
+        break
+
+print(cnt)
