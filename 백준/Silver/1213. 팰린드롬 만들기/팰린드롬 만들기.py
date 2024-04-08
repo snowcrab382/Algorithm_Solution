@@ -1,20 +1,19 @@
 from collections import Counter
 
-name = sorted(list(input()))
+name = input()
 count = Counter(name)
-odd = 0
-odd_alpha = ''
-ans = ''
-for i in count:
-    if count[i] % 2 != 0:
-        odd += 1
-        odd_alpha += i
 
-    for _ in range(count[i]//2):
-        ans += i
+odd = 0
+pal = ''
+for key,value in sorted(count.items()):
+    if value % 2 != 0:
+        odd += 1
+        odd_alphabet = key
+    pal += key * (value//2)
+
 if odd > 1:
     print("I'm Sorry Hansoo")
-elif odd == 0:
-    print(ans + ans[::-1])
+elif odd == 1:
+    print(pal + odd_alphabet + pal[::-1])
 else:
-    print(ans + odd_alpha + ans[::-1])
+    print(pal + pal[::-1])
