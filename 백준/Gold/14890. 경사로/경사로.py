@@ -1,39 +1,39 @@
-n, l = map(int,input().split())
-graph = [list(map(int,input().split())) for _ in range(n)]
-result = 0
+N, L = map(int,input().split())
+graph = [list(map(int,input().split())) for _ in range(N)]
 
 def check(line):
-    slope = [False] * n
-    for i in range(1, n):
+    slope = [False] * N
+    for i in range(1, N):
         if abs(line[i-1] - line[i]) > 1:
             return False
         else:
-            if line[i-1] - line[i] == 1: #오르막
-                for j in range(l):
-                    if i + j >= n:
+            if line[i-1] - line[i] == 1:
+                for j in range(L):
+                    if i + j >= N:
                         return False
-                    if line[i] != line[i+j]:
+                    if line[i+j] != line[i]:
                         return False
                     if slope[i+j]:
                         return False
                     if not slope[i+j]:
                         slope[i+j] = True
-            elif line[i-1] - line[i] == -1: #내리막
-                for j in range(l):
-                    if i - j - 1< 0:
+            elif line[i-1] - line[i] == -1:
+                for j in range(L):
+                    if i - j - 1 < 0:
                         return False
-                    if line[i-1] != line[i-j-1]:
+                    if line[i-1-j] != line[i-1]:
                         return False
-                    if slope[i-j-1]:
+                    if slope[i-1-j]:
                         return False
-                    if not slope[i-j-1]:
-                        slope[i-j-1] = True
+                    if not slope[i-1-j]:
+                        slope[i-1-j] = True
     return True
 
-for i in range(n):
+result = 0
+for i in range(N):
     if check(graph[i]):
         result += 1
-for j in range(n):
-    if check([graph[i][j] for i in range(n)]):
+for j in range(N):
+    if check([graph[i][j] for i in range(N)]):
         result += 1
 print(result)
