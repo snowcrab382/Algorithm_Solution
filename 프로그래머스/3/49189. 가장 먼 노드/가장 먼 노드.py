@@ -1,25 +1,22 @@
-from collections import deque
+from collections import deque, Counter
+import sys
+INF = sys.maxsize
 
 def solution(n, edge):
-    answer = 0
-    graph = [[] for _ in range (n + 1)]
-    distance = [-1] * (n+1)
-    for i,j in edge:
-        graph[i].append(j)
-        graph[j].append(i)
+    vertex = [[] for _ in range(n+1)]
+    for a, b in edge:
+        vertex[a].append(b)
+        vertex[b].append(a)
     
-    q = deque([1])
+    q = deque([(0, 1)])
+    distance = [INF] * (n+1)
+    distance[0] = 0
     distance[1] = 0
     while q:
-        x = q.popleft()
-        
-        for i in graph[x]:
-            if distance[i] == -1:
-                q.append(i)
-                distance[i] = distance[x] + 1
-    for j in distance:
-        if j == max(distance):
-            answer += 1
-
-    
-    return answer
+        cnt, node = q.popleft()
+        for next in vertex[node]:
+            if distance[next] > cnt + 1:
+                distance[next] = cnt + 1
+                q.append((distance[next], next))
+    answer = Counter(distance)
+    return answer[max(distance)]
