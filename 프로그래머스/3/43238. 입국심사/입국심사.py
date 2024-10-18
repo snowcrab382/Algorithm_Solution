@@ -3,7 +3,7 @@ MAX = sys.maxsize
 
 def solution(n, times):
     s, e = 0, MAX
-    while s < e:
+    while s <= e:
         m = (s + e) // 2
         
         tmp = 0
@@ -11,7 +11,7 @@ def solution(n, times):
             tmp += m // time
         
         if tmp >= n:
-            e = m
+            e = m - 1
         else:
             s = m + 1
         
